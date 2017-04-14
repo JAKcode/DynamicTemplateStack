@@ -93,7 +93,6 @@ void DynintStack<T>::displayList()
 	}
 	else 
 		cout << "Empty";
-	//Use the Recursion method to display items in the list
 
  }
 #endif
