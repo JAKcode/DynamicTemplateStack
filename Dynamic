@@ -1,0 +1,131 @@
+ #include <iostream>
+ using namespace std;
+//template <class T> After building all the functions, you will need to add the templates in order to work on intergers, double, char, string
+class List
+ {
+protected:
+ struct ListNode
+ {
+
+int value;
+ListNode *next;
+ListNode(int valuel, ListNode *nextl = NULL)
+{
+
+value = valuel;
+next = nextl;
+}
+} ;
+ ListNode *head; 
+ public:
+
+
+
+	 List() 
+	 {head = NULL;}
+~List();
+void append(int num);
+void insert(int num);
+void remove(int num);
+void displayList() const;
+int size();
+private:
+	// Recursive Implementations
+	void displayList (ListNode *ptr) const;
+	int size (ListNode *ptr) const;
+ } ;
+
+void List::append(int num)
+ {
+	if (head == NULL)
+	head = new ListNode(num);
+	else 
+	{
+		ListNode * nodePtr = head;
+		while (nodePtr->next != NULL)
+		nodePtr = nodePtr->next;
+		nodePtr->next = new ListNode(num);
+	}
+	
+	 //Add at the end of the list              
+
+
+}
+void List::insert(int num)
+ {
+ 	if (head == NULL || head->value >= num)
+ 	head = new ListNode (num, head);
+ 	else
+	{
+	 
+ 	ListNode * previousNodePtr=head;
+ 	ListNode * nodePtr = head->next;
+ 	while ( nodePtr != NULL && nodePtr->value < num)
+ 	 {
+ 		previousNodePtr = nodePtr->next;
+ 		
+	 }
+	 //Insert item in the sorted list. 
+	}
+}
+ void List::remove(int num)
+ {
+ 	ListNode * ptr, *previousNodePtr;
+ 	ListNode * nodePtr;
+ 	if (!head) 
+	return;
+ 	if (head->value == num)
+ 	{
+ 		nodePtr = head;
+ 		head = head->next;
+ 		delete nodePtr;
+	}
+	else
+	{
+		nodePtr = head;
+		while (nodePtr != NULL && nodePtr->value != num)
+		{
+			previousNodePtr = nodePtr;
+			nodePtr = nodePtr->next;
+		}
+		if (nodePtr)
+		{
+			previousNodePtr->next = nodePtr->next;
+			delete nodePtr;
+		}
+	}
+ 	
+	 // Remove item from the list
+ }
+
+ void List::displayList(ListNode *ptr) const
+{
+	if (ptr != NULL)
+	{
+		cout <<ptr->value << " ";
+		displayList(ptr->next) ;
+	}
+	//Use the Recursion method to display items in the list
+
+ }
+ int List::size(ListNode *ptr) const
+ {
+ 	if (ptr == NULL)
+ 	return 0;
+ 	else 
+ 	return 1 + size(ptr->next);
+	 // Return the size of the list.
+ }
+
+
+ List::~List()
+ {
+ 	ListNode * nodePtr = head;
+ 	while (nodePtr != NULL)
+ 	{
+ 		ListNode *garbage = nodePtr;
+ 		nodePtr = nodePtr->next;
+ 		delete garbage;
+	 }
+	 //Destroy the entire list
+ }
