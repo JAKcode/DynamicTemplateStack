@@ -80,16 +80,19 @@ else
 return false;
 }
 template <class T>
-void DynintStack<T>::displayList(bool x)
+void DynintStack<T>::displayList()
 {
 	StackNode * ptr;
 	if (ptr != NULL)
 	{
-		for (int 1 = 1; ptr.length(); i++)
+		while (ptr != NULL)
+		{
 		cout <<ptr->val<< " ";
+		ptr =ptr ->next;
+		}
 	}
 	else 
-		return 0;
+		cout << "Empty";
 	//Use the Recursion method to display items in the list
 
  }
