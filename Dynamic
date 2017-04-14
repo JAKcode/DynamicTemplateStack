@@ -1,131 +1,96 @@
- #include <iostream>
- using namespace std;
-//template <class T> After building all the functions, you will need to add the templates in order to work on intergers, double, char, string
-class List
- {
-protected:
- struct ListNode
- {
-
-int value;
-ListNode *next;
-ListNode(int valuel, ListNode *nextl = NULL)
+#ifndef DYNSTACK_H
+#define DYNSTACK_H
+#include <cassert> //Provides assert
+#include <cstdlib> //provides NULL and size_t
+#include <iostream>
+using namespace std;
+template <class T>
+class DynintStack
 {
-
-value = valuel;
-next = nextl;
-}
-} ;
- ListNode *head; 
- public:
-
-
-
-	 List() 
-	 {head = NULL;}
-~List();
-void append(int num);
-void insert(int num);
-void remove(int num);
-void displayList() const;
-int size();
 private:
-	// Recursive Implementations
-	void displayList (ListNode *ptr) const;
-	int size (ListNode *ptr) const;
- } ;
-
-void List::append(int num)
- {
-	if (head == NULL)
-	head = new ListNode(num);
-	else 
-	{
-		ListNode * nodePtr = head;
-		while (nodePtr->next != NULL)
-		nodePtr = nodePtr->next;
-		nodePtr->next = new ListNode(num);
-	}
+struct StackNode
+{
+	T val;
+	StackNode * next;
+	};
+StackNode * top;
+public:
+	DynintStack()
+	{ top = 0;}
+	~DynintStack();
+	void push (T);
+	void pop (T & );
+	bool isEmpty();
+	void displayList();
+};
+template <class T >
+DynintStack<T>:: ~DynintStack()
+{
+StackNode * nodePtr, *nextNode;
+while (nodePtr != NULL)
+{
+	nextNode= nodePtr->next;
+	delete nodePtr;
+	nodePtr = nextNode;
+}
+}
+template <class T >
+void DynintStack<T>::push(T num)
+{
+	StackNode *newNode;
+	newNode = new StackNode;
+	newNode -> val = num;
 	
-	 //Add at the end of the list              
-
-
-}
-void List::insert(int num)
- {
- 	if (head == NULL || head->value >= num)
- 	head = new ListNode (num, head);
- 	else
+	if (isEmpty())
 	{
-	 
- 	ListNode * previousNodePtr=head;
- 	ListNode * nodePtr = head->next;
- 	while ( nodePtr != NULL && nodePtr->value < num)
- 	 {
- 		previousNodePtr = nodePtr->next;
- 		
-	 }
-	 //Insert item in the sorted list. 
-	}
-}
- void List::remove(int num)
- {
- 	ListNode * ptr, *previousNodePtr;
- 	ListNode * nodePtr;
- 	if (!head) 
-	return;
- 	if (head->value == num)
- 	{
- 		nodePtr = head;
- 		head = head->next;
- 		delete nodePtr;
+		top = newNode;
+		newNode ->next = 0;
 	}
 	else
 	{
-		nodePtr = head;
-		while (nodePtr != NULL && nodePtr->value != num)
-		{
-			previousNodePtr = nodePtr;
-			nodePtr = nodePtr->next;
-		}
-		if (nodePtr)
-		{
-			previousNodePtr->next = nodePtr->next;
-			delete nodePtr;
-		}
+	newNode -> next = top;
+	top = newNode;
 	}
- 	
-	 // Remove item from the list
- }
-
- void List::displayList(ListNode *ptr) const
+}
+template <class T>
+void DynintStack<T>::pop(T& num)
 {
+	StackNode * temp;
+	if (isEmpty())
+	{
+		cout << "The stack is empty";
+	}
+	else 
+	{
+		num = top->val;
+		temp=  top->next;
+		delete top;
+		top= temp;
+	}
+}
+template <class T>
+bool DynintStack <T>:: isEmpty()
+{
+if (!top)
+{
+return true;
+
+}
+else
+return false;
+}
+template <class T>
+void DynintStack<T>::displayList(bool x)
+{
+	StackNode * ptr;
 	if (ptr != NULL)
 	{
-		cout <<ptr->value << " ";
-		displayList(ptr->next) ;
+		for (int 1 = 1; ptr.length(); i++)
+		cout <<ptr->val<< " ";
 	}
+	else 
+		return 0;
 	//Use the Recursion method to display items in the list
 
  }
- int List::size(ListNode *ptr) const
- {
- 	if (ptr == NULL)
- 	return 0;
- 	else 
- 	return 1 + size(ptr->next);
-	 // Return the size of the list.
- }
-
-
- List::~List()
- {
- 	ListNode * nodePtr = head;
- 	while (nodePtr != NULL)
- 	{
- 		ListNode *garbage = nodePtr;
- 		nodePtr = nodePtr->next;
- 		delete garbage;
-	 }
-	 //Destroy the entire list
- }
+#endif
